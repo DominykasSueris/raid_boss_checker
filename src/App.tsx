@@ -25,13 +25,14 @@ const App = () => {
 
   const fetchUserData = () => {
     fetch(
-      "https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?1680276444083"
+      "https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?1681824818000"
     )
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         setRaids(data);
+        console.log(data);
       });
   };
 
@@ -39,7 +40,7 @@ const App = () => {
     fetchUserData();
   }, []);
 
-  let raidsData = raids;
+  let raidsData = [...raids];
 
   const filterByStatus = (raidsData: RaidsData[]) => {
     setAliveRaids(raidsData.filter((raid) => raid.status === "1"));
@@ -55,6 +56,12 @@ const App = () => {
   return (
     <>
       <h1>Raid Boss Checker</h1>
+      <button
+        style={{ backgroundColor: "red" }}
+        onClick={() => filterByStatus(raidsData)}
+      >
+        Update
+      </button>
       <div className="table">
         <table>
           <thead>
@@ -67,14 +74,22 @@ const App = () => {
               {raids.map((raid) => (
                 <tr>
                   <td className="raid-id">{raid.id} </td>
-                  <td className="raid-status">{raid.status}</td>
+                  <td className="raid-status">
+                    {raid.status === "1" ? "ON" : "OFF"}
+                  </td>
                   <td className="raid-date">{raid.date}</td>
                 </tr>
               ))}
               {aliveRaids.map((raid) => (
                 <tr>
                   <td className="raid-id">{raid.id} </td>
-                  <td className="raid-status">{raid.status} </td>
+                  <td className="raid-status">ON</td>
+                  <td
+                    style={{ backgroundColor: "green" }}
+                    className="raid-date"
+                  >
+                    Alive
+                  </td>
                 </tr>
               ))}
             </>
