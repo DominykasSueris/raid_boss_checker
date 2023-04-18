@@ -58,7 +58,7 @@ const App = () => {
           </thead>
           <tbody>
             {raids.map((raid) => (
-              <tr>
+              <tr key={raid.id}>
                 {raid.status === "1" ? (
                   <>
                     <td className="raid-id">{raid.id}</td>
@@ -71,7 +71,7 @@ const App = () => {
                     </td>
                   </>
                 ) : (
-                  <tr>
+                  <tr key={raid.id}>
                     <td className="raid-id">{raid.id} </td>
                     <td className="raid-status">OFF</td>
                     <td className="raid-date">{raid.date}</td>
