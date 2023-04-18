@@ -15,13 +15,6 @@ const App = () => {
       date: "",
     },
   ]);
-  const [aliveRaids, setAliveRaids] = useState<RaidsData[]>([
-    {
-      id: "",
-      status: "",
-      date: "",
-    },
-  ]);
 
   const date = Date.now().toString();
 
@@ -42,25 +35,17 @@ const App = () => {
     fetchUserData();
   }, []);
 
-  let raidsData = [...raids];
-
-  const filterByStatus = (raidsData: RaidsData[]) => {
-    setAliveRaids(raidsData.filter((raid) => raid.status === "1"));
-    return aliveRaids;
+  const filterByStatus = (raids: RaidsData[]) => {
+    setRaids(raids.filter((raid) => raid.status === "1"));
+    return raids;
   };
-
-  console.log(aliveRaids);
-
-  useEffect(() => {
-    filterByStatus(raidsData);
-  }, []);
 
   return (
     <>
       <h1>Raid Boss Checker</h1>
       <button
         style={{ backgroundColor: "red" }}
-        onClick={() => filterByStatus(raidsData)}
+        onClick={() => filterByStatus(raids)}
       >
         Update
       </button>
@@ -72,29 +57,28 @@ const App = () => {
             <tr className="raid-date">Spawn Window</tr>
           </thead>
           <tbody>
-            <>
-              {raids.map((raid) => (
-                <tr>
-                  <td className="raid-id">{raid.id} </td>
-                  <td className="raid-status">
-                    {raid.status === "1" ? "ON" : "OFF"}
-                  </td>
-                  <td className="raid-date">{raid.date}</td>
-                </tr>
-              ))}
-              {aliveRaids.map((raid) => (
-                <tr>
-                  <td className="raid-id">{raid.id} </td>
-                  <td className="raid-status">ON</td>
-                  <td
-                    style={{ backgroundColor: "green" }}
-                    className="raid-date"
-                  >
-                    Alive
-                  </td>
-                </tr>
-              ))}
-            </>
+            {raids.map((raid) => (
+              <tr>
+                {raid.status === "1" ? (
+                  <>
+                    <td className="raid-id">{raid.id}</td>
+                    <td className="raid-status">ON</td>
+                    <td
+                      className="raid-date"
+                      style={{ backgroundColor: "green" }}
+                    >
+                      Alive
+                    </td>
+                  </>
+                ) : (
+                  <tr>
+                    <td className="raid-id">{raid.id} </td>
+                    <td className="raid-status">OFF</td>
+                    <td className="raid-date">{raid.date}</td>
+                  </tr>
+                )}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
