@@ -23,9 +23,11 @@ const App = () => {
     },
   ]);
 
+  const date = Date.now().toString();
+
   const fetchUserData = () => {
     fetch(
-      "https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?1681824818000"
+      `https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?${date}`
     )
       .then((response) => {
         return response.json();
