@@ -59,17 +59,19 @@ const App = () => {
       <div className="table">
         <table>
           <thead>
-            <tr className="raid-id">Raid Boss ID</tr>
-            <tr className="raid-status">Status</tr>
-            <tr className="raid-date">Spawn Window</tr>
+            <tr>
+              <td className="raid-id">Raid Boss ID</td>
+              <td className="raid-status">Status</td>
+              <td className="raid-date">Spawn Window</td>
+            </tr>
           </thead>
           <tbody>
             {raids.map((raid) => (
               <tr key={raid.id}>
+                <td className="raid-id">{raid.id}</td>
                 {raid.status === "1" ? (
                   <>
-                    <td className="raid-id">{raid.id}</td>
-                    <td className="raid-status">ON</td>
+                    <td className="raid-status">On</td>
                     <td
                       className="raid-date"
                       style={{ backgroundColor: "green" }}
@@ -78,11 +80,10 @@ const App = () => {
                     </td>
                   </>
                 ) : (
-                  <tr key={raid.id}>
-                    <td className="raid-id">{raid.id} </td>
+                  <>
                     <td className="raid-status">OFF</td>
                     <td className="raid-date">{raid.date}</td>
-                  </tr>
+                  </>
                 )}
               </tr>
             ))}
