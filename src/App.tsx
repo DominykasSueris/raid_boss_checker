@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import NpcList from "./NpcList";
 import "./App.css";
 
 interface RaidsData {
@@ -6,15 +7,8 @@ interface RaidsData {
   status: string;
   date: string;
 }
-
 const App = () => {
-  const [raids, setRaids] = useState<RaidsData[]>([
-    {
-      id: "",
-      status: "",
-      date: "",
-    },
-  ]);
+  const [raids, setRaids] = useState<RaidsData[]>([]);
 
   const date = Date.now().toString();
 
@@ -44,17 +38,17 @@ const App = () => {
 
   const filterByStatus = (raids: RaidsData[]) => {
     setRaids(raids.filter((raid) => raid.status === "1"));
-    return raids;
   };
 
   return (
     <>
       <h1>Raid Boss Checker</h1>
+      <h3>Available raids:</h3>
       <button
         style={{ backgroundColor: "red" }}
         onClick={() => filterByStatus(raids)}
       >
-        Update
+        Update List
       </button>
       <div className="table">
         <table>
@@ -68,7 +62,7 @@ const App = () => {
           <tbody>
             {raids.map((raid) => (
               <tr key={raid.id}>
-                <td className="raid-id">{raid.id}</td>
+                <td className="raid-id">{NpcList.getById(raid.id).name}</td>
                 {raid.status === "1" ? (
                   <>
                     <td className="raid-status">On</td>
