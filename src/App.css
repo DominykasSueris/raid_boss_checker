@@ -38,8 +38,12 @@ tr {
   width: 35vw;
 }
 
+.raid-lvl {
+  width: 20vw;
+}
+
 .raid-status {
-  width: 40vw;
+  width: 20vw;
 }
 
 .raid-date {

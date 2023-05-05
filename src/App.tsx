@@ -55,6 +55,7 @@ const App = () => {
           <thead>
             <tr>
               <td className="raid-id">Raid Boss ID</td>
+              <td className="raid-lvl">Raid Boss Level</td>
               <td className="raid-status">Status</td>
               <td className="raid-date">Spawn Window</td>
             </tr>
@@ -63,6 +64,7 @@ const App = () => {
             {raids.map((raid) => (
               <tr key={raid.id}>
                 <td className="raid-id">{NpcList.getById(raid.id).name}</td>
+                <td className="raid-lvl">{NpcList.getById(raid.id).level}</td>
                 {raid.status === "1" ? (
                   <>
                     <td className="raid-status">On</td>
