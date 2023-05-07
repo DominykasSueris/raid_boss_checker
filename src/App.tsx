@@ -9,6 +9,7 @@ interface RaidsData {
 }
 const App = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
+  const [isSorted, setSorted] = useState<boolean>();
 
   const date = Date.now().toString();
 
@@ -36,6 +37,20 @@ const App = () => {
     });
   };
 
+  const sortByLevel = (raids: RaidsData[]) => {
+    const sorting = !isSorted;
+    setSorted(sorting);
+    return [...raids].sort((a, b) => {
+      return sorting
+        ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
+          ? -1
+          : 1
+        : NpcList.getById(b.id).level < NpcList.getById(a.id).level
+        ? -1
+        : 1;
+    });
+  };
+
   const filterByStatus = (raids: RaidsData[]) => {
     setRaids(raids.filter((raid) => raid.status === "1"));
   };
@@ -55,7 +70,12 @@ const App = () => {
           <thead>
             <tr>
               <td className="raid-id">Raid Boss ID</td>
-              <td className="raid-lvl">Raid Boss Level</td>
+              <td
+                className="raid-lvl"
+                onClick={() => setRaids(sortByLevel(raids))}
+              >
+                Raid Boss Level
+              </td>
               <td className="raid-status">Status</td>
               <td className="raid-date">Spawn Window</td>
             </tr>
