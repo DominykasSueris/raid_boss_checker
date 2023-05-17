@@ -9,7 +9,8 @@ interface RaidsData {
 }
 const App = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
-  const [isSorted, setSorted] = useState<boolean>();
+  const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
+  const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
   const date = Date.now().toString();
 
@@ -38,8 +39,8 @@ const App = () => {
   };
 
   const sortByLevel = (raids: RaidsData[]) => {
-    const sorting = !isSorted;
-    setSorted(sorting);
+    const sorting = !isSortedByLevel;
+    setSortedByLevel(sorting);
     return [...raids].sort((a, b) => {
       return sorting
         ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
@@ -48,6 +49,20 @@ const App = () => {
         : NpcList.getById(b.id).level < NpcList.getById(a.id).level
         ? -1
         : 1;
+    });
+  };
+
+  const sortByBothStatus = (raids: RaidsData[]) => {
+    const sorting = !isSortedByStatus;
+    setSortedByStatus(sorting);
+    return raids.sort((a, b) => {
+      return sorting
+        ? a.status < b.status
+          ? -1
+          : 1 || parseInt(a.status) - parseInt(b.status)
+        : a.status > b.status
+        ? -1
+        : 1 || parseInt(a.status) - parseInt(b.status);
     });
   };
 
@@ -73,11 +88,17 @@ const App = () => {
               <td className="raid-lvl">
                 Raid Boss Level
                 <i
-                  className={`bi bi-arrow-${isSorted ? "up" : "down"}`}
+                  className={`bi bi-arrow-${isSortedByLevel ? "up" : "down"}`}
                   onClick={() => setRaids(sortByLevel(raids))}
                 ></i>
               </td>
-              <td className="raid-status">Status</td>
+              <td className="raid-status">
+                Status
+                <i
+                  className={`bi bi-arrow-${isSortedByStatus ? "up" : "down"}`}
+                  onClick={() => sortByBothStatus(raids)}
+                ></i>
+              </td>
               <td className="raid-date">Spawn Window</td>
             </tr>
           </thead>
