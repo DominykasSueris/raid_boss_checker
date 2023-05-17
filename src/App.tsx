@@ -70,11 +70,12 @@ const App = () => {
           <thead>
             <tr>
               <td className="raid-id">Raid Boss ID</td>
-              <td
-                className="raid-lvl"
-                onClick={() => setRaids(sortByLevel(raids))}
-              >
+              <td className="raid-lvl">
                 Raid Boss Level
+                <i
+                  className={`bi bi-arrow-${isSorted ? "up" : "down"}`}
+                  onClick={() => setRaids(sortByLevel(raids))}
+                ></i>
               </td>
               <td className="raid-status">Status</td>
               <td className="raid-date">Spawn Window</td>
