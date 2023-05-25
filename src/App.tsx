@@ -76,6 +76,10 @@ const App = () => {
     });
   };
 
+  const sortByOptionalLevel = () => {
+    console.log("clicked");
+  };
+
   const filterByStatus = (raids: RaidsData[]) => {
     setRaids(raids.filter((raid) => raid.status === "1"));
   };
@@ -91,6 +95,19 @@ const App = () => {
       >
         Update List
       </button>
+      <label>Level select: </label>
+      <select
+        className="form-select form-select-lg mb-3 h-75"
+        aria-label=".form-select-lg example"
+        onChange={sortByOptionalLevel}
+      >
+        <option value="level-20-30">20-30</option>
+        <option value="level-30-40">30-40</option>
+        <option value="level-40-50">40-50</option>
+        <option value="level-50-60">50-60</option>
+        <option value="level-60-70">60-70</option>
+        <option value="level-70-90">70-90</option>
+      </select>
       <div className="table">
         <table>
           <thead>
