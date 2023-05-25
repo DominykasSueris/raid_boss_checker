@@ -12,7 +12,17 @@ const App = () => {
   const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
   const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
-  const date = Date.now().toString();
+  const date = Date.now();
+
+  const formatter = Intl.DateTimeFormat("en-Ca", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  });
+  const currentDate = formatter.format(date);
 
   const fetchUserData = () => {
     fetch(
@@ -73,6 +83,7 @@ const App = () => {
   return (
     <>
       <h1>Raid Boss Checker</h1>
+      <h4>Current Date: {currentDate}</h4>
       <h3>Available raids:</h3>
       <button
         style={{ backgroundColor: "red" }}
