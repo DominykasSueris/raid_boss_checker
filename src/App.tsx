@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import RaidTableBody from "./components/RaidTableBody";
 import NpcList from "./NpcList";
 import "./App.css";
 
-interface RaidsData {
+export interface RaidsData {
   id: string;
   status: string;
   date: string;
@@ -41,10 +42,6 @@ const App = () => {
     fetchUserData();
   }, []);
 
-  const filterRaids = () => {
-    return filterByLevel(raids);
-  };
-
   const sortByStatus = (raids: RaidsData[]) => {
     return raids.sort((a, b) => {
       return a.date < b.date
@@ -81,14 +78,8 @@ const App = () => {
     });
   };
 
-  const filterByLevel = (raids: RaidsData[]) => {
-    return raids.filter(
-      (raid) => NpcList.getById(raid.id).level === levelValue
-    );
-  };
-
   const filterByStatus = (raids: RaidsData[]) => {
-    return raids.filter((raid) => raid.status === "1");
+    setRaids(raids.filter((raid) => raid.status === "1"));
   };
 
   return (
@@ -108,6 +99,7 @@ const App = () => {
         aria-label=".form-select-lg example"
         onChange={(e) => setLevelValue(parseInt(e.target.value))}
       >
+        <option value="">All</option>
         <option value={20}>20-30</option>
         <option value={30}>30-40</option>
         <option value={40}>40-50</option>
@@ -137,30 +129,7 @@ const App = () => {
               <td className="raid-date">Spawn Window</td>
             </tr>
           </thead>
-          <tbody>
-            {filterRaids().map((raid) => (
-              <tr key={raid.id}>
-                <td className="raid-id">{NpcList.getById(raid.id).name}</td>
-                <td className="raid-lvl">{NpcList.getById(raid.id).level}</td>
-                {raid.status === "1" ? (
-                  <>
-                    <td className="raid-status">On</td>
-                    <td
-                      className="raid-date"
-                      style={{ backgroundColor: "green" }}
-                    >
-                      Alive
-                    </td>
-                  </>
-                ) : (
-                  <>
-                    <td className="raid-status">OFF</td>
-                    <td className="raid-date">{raid.date}</td>
-                  </>
-                )}
-              </tr>
-            ))}
-          </tbody>
+          <RaidTableBody raids={raids} levelValue={levelValue} />
         </table>
       </div>
     </>
