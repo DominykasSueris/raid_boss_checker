@@ -9,6 +9,7 @@ interface RaidsData {
 }
 const App = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
+  const [levelValue, setLevelValue] = useState<Number>();
   const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
   const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
@@ -39,6 +40,10 @@ const App = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  const filterRaids = () => {
+    return filterByLevel(raids);
+  };
 
   const sortByStatus = (raids: RaidsData[]) => {
     return raids.sort((a, b) => {
@@ -76,12 +81,14 @@ const App = () => {
     });
   };
 
-  const sortByOptionalLevel = () => {
-    console.log("clicked");
+  const filterByLevel = (raids: RaidsData[]) => {
+    return raids.filter(
+      (raid) => NpcList.getById(raid.id).level === levelValue
+    );
   };
 
   const filterByStatus = (raids: RaidsData[]) => {
-    setRaids(raids.filter((raid) => raid.status === "1"));
+    return raids.filter((raid) => raid.status === "1");
   };
 
   return (
@@ -99,14 +106,14 @@ const App = () => {
       <select
         className="form-select form-select-lg mb-3 h-75"
         aria-label=".form-select-lg example"
-        onChange={sortByOptionalLevel}
+        onChange={(e) => setLevelValue(parseInt(e.target.value))}
       >
-        <option value="level-20-30">20-30</option>
-        <option value="level-30-40">30-40</option>
-        <option value="level-40-50">40-50</option>
-        <option value="level-50-60">50-60</option>
-        <option value="level-60-70">60-70</option>
-        <option value="level-70-90">70-90</option>
+        <option value={20}>20-30</option>
+        <option value={30}>30-40</option>
+        <option value={40}>40-50</option>
+        <option value={50}>50-60</option>
+        <option value={60}>60-70</option>
+        <option value={70}>70-90</option>
       </select>
       <div className="table">
         <table>
@@ -131,7 +138,7 @@ const App = () => {
             </tr>
           </thead>
           <tbody>
-            {raids.map((raid) => (
+            {filterRaids().map((raid) => (
               <tr key={raid.id}>
                 <td className="raid-id">{NpcList.getById(raid.id).name}</td>
                 <td className="raid-lvl">{NpcList.getById(raid.id).level}</td>
