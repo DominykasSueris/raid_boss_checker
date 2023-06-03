@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import RaidTableBody from "./components/RaidTableBody";
+import RaidTable from "./components/RaidTable";
 import NpcList from "./NpcList";
-import "./App.css";
 
 export interface RaidsData {
   id: string;
   status: string;
   date: string;
 }
+
 const App = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
   const [levelValue, setLevelValue] = useState<Number>();
@@ -107,31 +107,15 @@ const App = () => {
         <option value={60}>60-70</option>
         <option value={70}>70-90</option>
       </select>
-      <div className="table">
-        <table>
-          <thead>
-            <tr>
-              <td className="raid-id">Raid Boss ID</td>
-              <td className="raid-lvl">
-                Raid Boss Level
-                <i
-                  className={`bi bi-arrow-${isSortedByLevel ? "up" : "down"}`}
-                  onClick={() => setRaids(sortByLevel(raids))}
-                ></i>
-              </td>
-              <td className="raid-status">
-                Status
-                <i
-                  className={`bi bi-arrow-${isSortedByStatus ? "up" : "down"}`}
-                  onClick={() => sortByBothStatus(raids)}
-                ></i>
-              </td>
-              <td className="raid-date">Spawn Window</td>
-            </tr>
-          </thead>
-          <RaidTableBody raids={raids} levelValue={levelValue} />
-        </table>
-      </div>
+      <RaidTable
+        raids={raids}
+        setRaids={setRaids}
+        levelValue={levelValue}
+        sortByLevel={sortByLevel}
+        sortByBothStatus={sortByBothStatus}
+        isSortedByLevel={isSortedByLevel}
+        isSortedByStatus={isSortedByStatus}
+      />
     </>
   );
 };
