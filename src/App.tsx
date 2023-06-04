@@ -8,14 +8,9 @@ export interface RaidsData {
   date: string;
 }
 
-export interface LevelRange {
-  min: number;
-  max: number;
-}
-
 const App = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
-  const [levelValue, setLevelValue] = useState<LevelRange>();
+
   const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
   const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
@@ -87,15 +82,6 @@ const App = () => {
     setRaids(raids.filter((raid) => raid.status === "1"));
   };
 
-  const levels: LevelRange[] = [
-    { min: 20, max: 30 },
-    { min: 31, max: 40 },
-    { min: 41, max: 50 },
-    { min: 51, max: 60 },
-    { min: 61, max: 70 },
-    { min: 71, max: 90 },
-  ];
-
   return (
     <>
       <h1>Raid Boss Checker</h1>
@@ -107,23 +93,10 @@ const App = () => {
       >
         Update List
       </button>
-      <label>Level select: </label>
-      <select
-        className="form-select form-select-lg mb-3 h-75"
-        aria-label=".form-select-lg example"
-        onChange={(e) => setLevelValue(levels[parseInt(e.target.value)])}
-      >
-        <option value="">All</option>
-        {levels.map((level, idx) => (
-          <option value={idx}>
-            {level.min} - {level.max}
-          </option>
-        ))}
-      </select>
+
       <RaidTable
         raids={raids}
         setRaids={setRaids}
-        levelValue={levelValue}
         sortByLevel={sortByLevel}
         sortByBothStatus={sortByBothStatus}
         isSortedByLevel={isSortedByLevel}

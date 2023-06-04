@@ -1,5 +1,6 @@
 import NpcList from "../NpcList";
-import { LevelRange, RaidsData } from "../App";
+import { RaidsData } from "../App";
+import { LevelRange } from "./RaidTable";
 
 interface RaidTableProps {
   raids: RaidsData[];
