@@ -1,14 +1,14 @@
 import RaidTableBody from "./RaidTableBody";
-import { RaidsData } from "../App";
+import { LevelRange, RaidsData } from "../App";
 import "../App.css";
 
 interface RaidTable {
   raids: RaidsData[];
   setRaids: (raids: RaidsData[]) => void;
-  levelValue?: Number;
-  sortByLevel: (raids: RaidsData[]) => void;
+  levelValue?: LevelRange;
+  sortByLevel: (raids: RaidsData[]) => RaidsData[];
   isSortedByLevel?: boolean;
-  sortByBothStatus: (raids: RaidsData[]) => void;
+  sortByBothStatus: (raids: RaidsData[]) => RaidsData[];
   isSortedByStatus?: boolean;
 }
 
