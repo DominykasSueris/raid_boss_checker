@@ -8,7 +8,6 @@ interface RaidTable {
   raids: RaidsData[];
   setRaids: (raids: RaidsData[]) => void;
   sortByLevel: (raids: RaidsData[]) => RaidsData[];
-  filterByStatus: (raids: RaidsData[]) => void;
   isSortedByLevel?: boolean;
   sortByBothStatus: (raids: RaidsData[]) => RaidsData[];
   isSortedByStatus?: boolean;
@@ -25,7 +24,6 @@ const RaidTable = ({
   sortByLevel,
   isSortedByLevel,
   sortByBothStatus,
-  filterByStatus,
   isSortedByStatus,
 }: RaidTable) => {
   const [levelValue, setLevelValue] = useState<LevelRange>();
@@ -38,6 +36,10 @@ const RaidTable = ({
     { min: 61, max: 70 },
     { min: 71, max: 90 },
   ];
+
+  const filterByStatus = (raids: RaidsData[]) => {
+    setRaids(raids.filter((raid) => raid.status === "1"));
+  };
 
   return (
     <>

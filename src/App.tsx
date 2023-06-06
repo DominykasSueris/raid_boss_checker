@@ -67,10 +67,6 @@ const App = () => {
     });
   };
 
-  const filterByStatus = (raids: RaidsData[]) => {
-    setRaids(raids.filter((raid) => raid.status === "1"));
-  };
-
   return (
     <>
       <RaidTable
@@ -78,7 +74,6 @@ const App = () => {
         setRaids={setRaids}
         sortByLevel={sortByLevel}
         sortByBothStatus={sortByBothStatus}
-        filterByStatus={filterByStatus}
         isSortedByLevel={isSortedByLevel}
         isSortedByStatus={isSortedByStatus}
       />
