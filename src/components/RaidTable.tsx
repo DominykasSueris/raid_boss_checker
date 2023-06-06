@@ -1,12 +1,14 @@
 import { useState } from "react";
 import RaidTableBody from "./RaidTableBody";
 import { RaidsData } from "../App";
+import { currentDate } from "../utils/date";
 import "../App.css";
 
 interface RaidTable {
   raids: RaidsData[];
   setRaids: (raids: RaidsData[]) => void;
   sortByLevel: (raids: RaidsData[]) => RaidsData[];
+  filterByStatus: (raids: RaidsData[]) => void;
   isSortedByLevel?: boolean;
   sortByBothStatus: (raids: RaidsData[]) => RaidsData[];
   isSortedByStatus?: boolean;
@@ -23,6 +25,7 @@ const RaidTable = ({
   sortByLevel,
   isSortedByLevel,
   sortByBothStatus,
+  filterByStatus,
   isSortedByStatus,
 }: RaidTable) => {
   const [levelValue, setLevelValue] = useState<LevelRange>();
@@ -38,6 +41,15 @@ const RaidTable = ({
 
   return (
     <>
+      <h1>Raid Boss Checker</h1>
+      <h4>Current Date: {currentDate}</h4>
+      <h3>Available raids:</h3>
+      <button
+        style={{ backgroundColor: "red" }}
+        onClick={() => filterByStatus(raids)}
+      >
+        Update List
+      </button>
       <label>Level select: </label>
       <select
         className="form-select form-select-lg mb-3 h-75"
