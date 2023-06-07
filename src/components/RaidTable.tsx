@@ -4,6 +4,7 @@ import NpcList from "../NpcList";
 import { currentDate, date } from "../utils/date";
 import { RaidsData } from "../utils/spec";
 import { levels, LevelRange } from "../utils/levels";
+import { sortByStatus } from "../utils/sortArray";
 import "../App.css";
 
 const RaidTable = () => {
@@ -27,14 +28,6 @@ const RaidTable = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
-
-  const sortByStatus = (raids: RaidsData[]) => {
-    return raids.sort((a, b) => {
-      return a.date < b.date
-        ? -1
-        : 1 || parseInt(a.status) - parseInt(b.status);
-    });
-  };
 
   const sortByLevel = (raids: RaidsData[]) => {
     const sorting = !isSortedByLevel;
