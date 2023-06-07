@@ -1,7 +1,32 @@
+import NpcList from "../NpcList";
 import { RaidsData } from "../utils/spec";
 
 export const sortByStatus = (raids: RaidsData[]) => {
   return raids.sort((a, b) => {
     return a.date < b.date ? -1 : 1 || parseInt(a.status) - parseInt(b.status);
+  });
+};
+
+export const sortByLevel = (raids: RaidsData[], isAscending?: boolean) => {
+  return raids.sort((a, b) => {
+    return isAscending
+      ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
+        ? -1
+        : 1
+      : NpcList.getById(b.id).level < NpcList.getById(a.id).level
+      ? -1
+      : 1;
+  });
+};
+
+export const sortByBothStatus = (raids: RaidsData[], isAscending?: boolean) => {
+  return raids.sort((a, b) => {
+    return isAscending
+      ? a.status < b.status
+        ? -1
+        : 1 || parseInt(a.status) - parseInt(b.status)
+      : a.status > b.status
+      ? -1
+      : 1 || parseInt(a.status) - parseInt(b.status);
   });
 };

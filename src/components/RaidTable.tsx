@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
-import NpcList from "../NpcList";
 import { currentDate, date } from "../utils/date";
 import { RaidsData } from "../utils/spec";
 import { levels, LevelRange } from "../utils/levels";
-import { sortByStatus } from "../utils/sortArray";
+import {
+  sortByStatus,
+  sortByBothStatus,
+  sortByLevel,
+} from "../utils/sortArray";
 import "../App.css";
 
 const RaidTable = () => {
@@ -28,34 +31,6 @@ const RaidTable = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
-
-  const sortByLevel = (raids: RaidsData[]) => {
-    const sorting = !isSortedByLevel;
-    setSortedByLevel(sorting);
-    return [...raids].sort((a, b) => {
-      return sorting
-        ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
-          ? -1
-          : 1
-        : NpcList.getById(b.id).level < NpcList.getById(a.id).level
-        ? -1
-        : 1;
-    });
-  };
-
-  const sortByBothStatus = (raids: RaidsData[]) => {
-    const sorting = !isSortedByStatus;
-    setSortedByStatus(sorting);
-    return raids.sort((a, b) => {
-      return sorting
-        ? a.status < b.status
-          ? -1
-          : 1 || parseInt(a.status) - parseInt(b.status)
-        : a.status > b.status
-        ? -1
-        : 1 || parseInt(a.status) - parseInt(b.status);
-    });
-  };
 
   const filterByStatus = (raids: RaidsData[]) => {
     setRaids(raids.filter((raid) => raid.status === "1"));
@@ -94,14 +69,20 @@ const RaidTable = () => {
                 Raid Boss Level
                 <i
                   className={`bi bi-arrow-${isSortedByLevel ? "up" : "down"}`}
-                  onClick={() => setRaids(sortByLevel(raids))}
+                  onClick={() => {
+                    setRaids(sortByLevel(raids, isSortedByLevel));
+                    setSortedByLevel(!isSortedByLevel);
+                  }}
                 ></i>
               </td>
               <td className="raid-status">
                 Status
                 <i
                   className={`bi bi-arrow-${isSortedByStatus ? "up" : "down"}`}
-                  onClick={() => sortByBothStatus(raids)}
+                  onClick={() => {
+                    setRaids(sortByBothStatus(raids, isSortedByStatus));
+                    setSortedByStatus(!isSortedByStatus);
+                  }}
                 ></i>
               </td>
               <td className="raid-date">Spawn Window</td>
