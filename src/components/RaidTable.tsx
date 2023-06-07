@@ -1,39 +1,27 @@
 import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
-import { currentDate, date } from "../utils/date";
+import { currentDate } from "../utils/date";
 import { RaidsData } from "../utils/spec";
 import { levels, LevelRange } from "../utils/levels";
-import {
-  sortByStatus,
-  sortByBothStatus,
-  sortByLevel,
-} from "../utils/sortArray";
+import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 import "../App.css";
 
-const RaidTable = () => {
-  const [raids, setRaids] = useState<RaidsData[]>([]);
+interface RaidsTable {
+  raids: RaidsData[];
+}
+
+const RaidTable = ({ raids }: RaidsTable) => {
+  const [raidsToShow, setRaidsToShow] = useState<RaidsData[]>(raids);
   const [levelValue, setLevelValue] = useState<LevelRange>();
   const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
   const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
-  const fetchUserData = () => {
-    fetch(
-      `https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?${date}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setRaids(sortByStatus(data));
-      });
-  };
-
   useEffect(() => {
-    fetchUserData();
-  }, []);
+    setRaidsToShow(raids);
+  }, [raids]);
 
   const filterByStatus = (raids: RaidsData[]) => {
-    setRaids(raids.filter((raid) => raid.status === "1"));
+    setRaidsToShow(raids.filter((raid) => raid.status === "1"));
   };
 
   return (
@@ -70,7 +58,7 @@ const RaidTable = () => {
                 <i
                   className={`bi bi-arrow-${isSortedByLevel ? "up" : "down"}`}
                   onClick={() => {
-                    setRaids(sortByLevel(raids, isSortedByLevel));
+                    setRaidsToShow(sortByLevel(raids, isSortedByLevel));
                     setSortedByLevel(!isSortedByLevel);
                   }}
                 ></i>
@@ -80,7 +68,7 @@ const RaidTable = () => {
                 <i
                   className={`bi bi-arrow-${isSortedByStatus ? "up" : "down"}`}
                   onClick={() => {
-                    setRaids(sortByBothStatus(raids, isSortedByStatus));
+                    setRaidsToShow(sortByBothStatus(raids, isSortedByStatus));
                     setSortedByStatus(!isSortedByStatus);
                   }}
                 ></i>
@@ -88,7 +76,7 @@ const RaidTable = () => {
               <td className="raid-date">Spawn Window</td>
             </tr>
           </thead>
-          <RaidTableBody raids={raids} levelValue={levelValue} />
+          <RaidTableBody raids={raidsToShow} levelValue={levelValue} />
         </table>
       </div>
     </>
