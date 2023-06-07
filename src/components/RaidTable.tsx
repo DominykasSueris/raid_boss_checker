@@ -1,19 +1,10 @@
 import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
+import NpcList from "../NpcList";
 import { currentDate, date } from "../utils/date";
 import { RaidsData } from "../utils/spec";
+import { levels, LevelRange } from "../utils/levels";
 import "../App.css";
-import NpcList from "../NpcList";
-
-interface RaidTable {
-  isSortedByLevel?: boolean;
-  isSortedByStatus?: boolean;
-}
-
-export interface LevelRange {
-  min: number;
-  max: number;
-}
 
 const RaidTable = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
@@ -72,15 +63,6 @@ const RaidTable = () => {
         : 1 || parseInt(a.status) - parseInt(b.status);
     });
   };
-
-  const levels: LevelRange[] = [
-    { min: 20, max: 30 },
-    { min: 31, max: 40 },
-    { min: 41, max: 50 },
-    { min: 51, max: 60 },
-    { min: 61, max: 70 },
-    { min: 71, max: 90 },
-  ];
 
   const filterByStatus = (raids: RaidsData[]) => {
     setRaids(raids.filter((raid) => raid.status === "1"));
