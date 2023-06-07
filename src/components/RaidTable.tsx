@@ -1,15 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
-import { RaidsData } from "../App";
-import { currentDate } from "../utils/date";
+import { currentDate, date } from "../utils/date";
+import { RaidsData } from "../utils/spec";
 import "../App.css";
+import NpcList from "../NpcList";
 
 interface RaidTable {
-  raids: RaidsData[];
-  setRaids: (raids: RaidsData[]) => void;
-  sortByLevel: (raids: RaidsData[]) => RaidsData[];
   isSortedByLevel?: boolean;
-  sortByBothStatus: (raids: RaidsData[]) => RaidsData[];
   isSortedByStatus?: boolean;
 }
 
@@ -18,15 +15,63 @@ export interface LevelRange {
   max: number;
 }
 
-const RaidTable = ({
-  raids,
-  setRaids,
-  sortByLevel,
-  isSortedByLevel,
-  sortByBothStatus,
-  isSortedByStatus,
-}: RaidTable) => {
+const RaidTable = () => {
+  const [raids, setRaids] = useState<RaidsData[]>([]);
   const [levelValue, setLevelValue] = useState<LevelRange>();
+  const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
+  const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
+
+  const fetchUserData = () => {
+    fetch(
+      `https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?${date}`
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setRaids(sortByStatus(data));
+      });
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const sortByStatus = (raids: RaidsData[]) => {
+    return raids.sort((a, b) => {
+      return a.date < b.date
+        ? -1
+        : 1 || parseInt(a.status) - parseInt(b.status);
+    });
+  };
+
+  const sortByLevel = (raids: RaidsData[]) => {
+    const sorting = !isSortedByLevel;
+    setSortedByLevel(sorting);
+    return [...raids].sort((a, b) => {
+      return sorting
+        ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
+          ? -1
+          : 1
+        : NpcList.getById(b.id).level < NpcList.getById(a.id).level
+        ? -1
+        : 1;
+    });
+  };
+
+  const sortByBothStatus = (raids: RaidsData[]) => {
+    const sorting = !isSortedByStatus;
+    setSortedByStatus(sorting);
+    return raids.sort((a, b) => {
+      return sorting
+        ? a.status < b.status
+          ? -1
+          : 1 || parseInt(a.status) - parseInt(b.status)
+        : a.status > b.status
+        ? -1
+        : 1 || parseInt(a.status) - parseInt(b.status);
+    });
+  };
 
   const levels: LevelRange[] = [
     { min: 20, max: 30 },
