@@ -6,16 +6,12 @@ import { sortByStatus } from "./sortArray";
 export const useFetchRaids = () => {
   const [raids, setRaids] = useState<RaidsData[]>([]);
 
-  const fetchUserData = () => {
-    fetch(
+  const fetchUserData = async () => {
+    const res = await fetch(
       `https://seasons.l2reborn.org/wp-content/uploads/raids/raids.json?${date}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setRaids(sortByStatus(data));
-      });
+    );
+    const data = await res.json();
+    setRaids(sortByStatus(data));
   };
 
   useEffect(() => {
