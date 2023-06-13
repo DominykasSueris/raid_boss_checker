@@ -1,27 +1,13 @@
 import NpcList from "../NpcList";
-import { LevelRange } from "../utils/levels";
 import { RaidsData } from "../utils/spec";
 interface RaidTableProps {
   raids: RaidsData[];
-  levelValue?: LevelRange;
 }
 
-const RaidTableBody = ({ raids, levelValue }: RaidTableProps) => {
-  const filterByLevel = (raids: RaidsData[]) => {
-    if (!levelValue) return raids;
-    return raids.filter(
-      (raid) =>
-        levelValue.min <= NpcList.getById(raid.id).level &&
-        levelValue.max >= NpcList.getById(raid.id).level
-    );
-  };
-
-  const filterRaids = () => {
-    return filterByLevel(raids);
-  };
+const RaidTableBody = ({ raids }: RaidTableProps) => {
   return (
     <tbody>
-      {filterRaids().map((raid) => (
+      {raids.map((raid) => (
         <tr key={raid.id}>
           <td className="raid-id">{NpcList.getById(raid.id).name}</td>
           <td className="raid-lvl">{NpcList.getById(raid.id).level}</td>

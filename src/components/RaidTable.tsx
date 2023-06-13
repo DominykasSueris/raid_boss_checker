@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
 import { currentDate } from "../utils/date";
 import { RaidsData } from "../utils/spec";
-import { levels, LevelRange } from "../utils/levels";
 import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 import "../App.css";
 
-interface RaidsTable {
+export interface RaidsTable {
   raids: RaidsData[];
 }
 
 const RaidTable = ({ raids }: RaidsTable) => {
   const [raidsToShow, setRaidsToShow] = useState<RaidsData[]>(raids);
-  const [levelValue, setLevelValue] = useState<LevelRange>();
   const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
   const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
 
@@ -20,39 +18,11 @@ const RaidTable = ({ raids }: RaidsTable) => {
     setRaidsToShow(raids);
   }, [raids]);
 
-  const filterByStatus = (status: string) => {
-    if (!status) return raids;
-    return [...raids].filter((raid) => raid.status === status);
-  };
-
   return (
     <>
       <h1>Raid Boss Checker</h1>
       <h4>Current Date: {currentDate}</h4>
       <h3>Available raids:</h3>
-      <label>Status select:</label>
-      <select
-        onChange={(e) => {
-          setRaidsToShow(filterByStatus(e.target.value));
-        }}
-      >
-        <option value="">All</option>
-        <option value="1">ON</option>
-        <option value="0">OFF</option>
-      </select>
-      <label>Level select: </label>
-      <select
-        className="form-select form-select-lg mb-3 h-75"
-        aria-label=".form-select-lg example"
-        onChange={(e) => setLevelValue(levels[parseInt(e.target.value)])}
-      >
-        <option value="">All</option>
-        {levels.map((level, idx) => (
-          <option value={idx}>
-            {level.min} - {level.max}
-          </option>
-        ))}
-      </select>
       <div className="table">
         <table>
           <thead>
@@ -81,7 +51,7 @@ const RaidTable = ({ raids }: RaidsTable) => {
               <td className="raid-date">Spawn Window</td>
             </tr>
           </thead>
-          <RaidTableBody raids={raidsToShow} levelValue={levelValue} />
+          <RaidTableBody raids={raidsToShow} />
         </table>
       </div>
     </>
