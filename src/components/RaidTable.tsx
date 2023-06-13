@@ -20,8 +20,9 @@ const RaidTable = ({ raids }: RaidsTable) => {
     setRaidsToShow(raids);
   }, [raids]);
 
-  const filterByStatus = (raids: RaidsData[]) => {
-    setRaidsToShow(raids.filter((raid) => raid.status === "1"));
+  const filterByStatus = (status: string) => {
+    if (!status) return raids;
+    return [...raids].filter((raid) => raid.status === status);
   };
 
   return (
@@ -29,12 +30,16 @@ const RaidTable = ({ raids }: RaidsTable) => {
       <h1>Raid Boss Checker</h1>
       <h4>Current Date: {currentDate}</h4>
       <h3>Available raids:</h3>
-      <button
-        style={{ backgroundColor: "red" }}
-        onClick={() => filterByStatus(raids)}
+      <label>Status select:</label>
+      <select
+        onChange={(e) => {
+          setRaidsToShow(filterByStatus(e.target.value));
+        }}
       >
-        Update List
-      </button>
+        <option value="">All</option>
+        <option value="1">ON</option>
+        <option value="0">OFF</option>
+      </select>
       <label>Level select: </label>
       <select
         className="form-select form-select-lg mb-3 h-75"
