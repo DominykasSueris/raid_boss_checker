@@ -1,13 +1,13 @@
 import NpcList from "../NpcList";
 import { LevelRange } from "./levels";
-import { RaidsData } from "./spec";
+import { RaidsInfo } from "./spec";
 
-export const filterByStatus = (raids: RaidsData[], status: string) => {
+export const filterByStatus = (raids: RaidsInfo[], status: string) => {
   if (!status) return raids;
   return [...raids].filter((raid) => raid.status === status);
 };
 
-export const filterByLevel = (raids: RaidsData[], levelValue?: LevelRange) => {
+export const filterByLevel = (raids: RaidsInfo[], levelValue?: LevelRange) => {
   if (!levelValue) return raids;
   return raids.filter(
     (raid) =>

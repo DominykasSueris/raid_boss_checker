@@ -1,5 +1,5 @@
 import NpcList from "../NpcList";
-import { RaidsData } from "../utils/spec";
+import { RaidsData, RaidsInfo } from "../utils/spec";
 
 export const sortByStatus = (raids: RaidsData[]) => {
   return raids.sort((a, b) => {
@@ -7,7 +7,7 @@ export const sortByStatus = (raids: RaidsData[]) => {
   });
 };
 
-export const sortByLevel = (raids: RaidsData[], isAscending?: boolean) => {
+export const sortByLevel = (raids: RaidsInfo[], isAscending?: boolean) => {
   return raids.sort((a, b) => {
     return isAscending
       ? NpcList.getById(a.id).level < NpcList.getById(b.id).level
@@ -19,7 +19,7 @@ export const sortByLevel = (raids: RaidsData[], isAscending?: boolean) => {
   });
 };
 
-export const sortByBothStatus = (raids: RaidsData[], isAscending?: boolean) => {
+export const sortByBothStatus = (raids: RaidsInfo[], isAscending?: boolean) => {
   return raids.sort((a, b) => {
     return isAscending
       ? a.status < b.status
