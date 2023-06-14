@@ -1,21 +1,50 @@
 import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
+import RaidTableHeader from "./RaidTableHeader";
 import { currentDate } from "../utils/date";
-import { RaidsData } from "../utils/spec";
-import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
+import { Column, RaidsInfo } from "../utils/spec";
 import "../App.css";
+import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 
 export interface RaidsTable {
-  raids: RaidsData[];
+  raids: RaidsInfo[];
 }
 
+export type Sorting = typeof columnSorting;
+
+const columnSorting = { column: "status", order: "desc" };
+
 const RaidTable = ({ raids }: RaidsTable) => {
-  const [raidsToShow, setRaidsToShow] = useState<RaidsData[]>(raids);
-  const [isSortedByLevel, setSortedByLevel] = useState<boolean>();
-  const [isSortedByStatus, setSortedByStatus] = useState<boolean>();
+  const [sorting, setSorting] = useState<Sorting>(columnSorting);
+  const [raidsToShow, setRaidsToShow] = useState<RaidsInfo[]>(raids);
+
+  const columns: Column[] = [
+    { key: "name", label: "Raid Boss ID", sortable: true },
+    { key: "level", label: "Raid Boss Level", sortable: true },
+    { key: "status", label: "Status", sortable: true },
+    { key: "date", label: "Spawn Window", sortable: false },
+  ];
+
+  const sortTable = (newSorting: Sorting) => {
+    setSorting(newSorting);
+    if (newSorting.column === "name")
+      setRaidsToShow(
+        newSorting.order === "asc"
+          ? [...raids].sort((a, b) => {
+              return a.name.localeCompare(b.name);
+            })
+          : [...raids].sort((a, b) => {
+              return b.name.localeCompare(a.name);
+            })
+      );
+    if (newSorting.column === "level")
+      setRaidsToShow(sortByLevel(raids, newSorting.order === "asc"));
+    if (newSorting.column === "status")
+      setRaidsToShow(sortByBothStatus(raids, newSorting.order === "asc"));
+  };
 
   useEffect(() => {
-    setRaidsToShow(raids);
+    sortTable(sorting);
   }, [raids]);
 
   return (
@@ -25,33 +54,12 @@ const RaidTable = ({ raids }: RaidsTable) => {
       <h3>Available raids:</h3>
       <div className="table">
         <table>
-          <thead>
-            <tr>
-              <td className="raid-id">Raid Boss ID</td>
-              <td className="raid-lvl">
-                Raid Boss Level
-                <i
-                  className={`bi bi-arrow-${isSortedByLevel ? "up" : "down"}`}
-                  onClick={() => {
-                    setRaidsToShow(sortByLevel(raids, isSortedByLevel));
-                    setSortedByLevel(!isSortedByLevel);
-                  }}
-                ></i>
-              </td>
-              <td className="raid-status">
-                Status
-                <i
-                  className={`bi bi-arrow-${isSortedByStatus ? "up" : "down"}`}
-                  onClick={() => {
-                    setRaidsToShow(sortByBothStatus(raids, isSortedByStatus));
-                    setSortedByStatus(!isSortedByStatus);
-                  }}
-                ></i>
-              </td>
-              <td className="raid-date">Spawn Window</td>
-            </tr>
-          </thead>
-          <RaidTableBody raids={raidsToShow} />
+          <RaidTableHeader
+            columns={columns}
+            sorting={sorting}
+            sortTable={sortTable}
+          />
+          <RaidTableBody raids={raidsToShow} columns={columns} />
         </table>
       </div>
     </>

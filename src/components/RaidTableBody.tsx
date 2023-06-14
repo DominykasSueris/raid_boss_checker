@@ -1,29 +1,17 @@
-import NpcList from "../NpcList";
-import { RaidsData } from "../utils/spec";
+import { Column, RaidsInfo } from "../utils/spec";
 interface RaidTableProps {
-  raids: RaidsData[];
+  raids: RaidsInfo[];
+  columns: Column[];
 }
 
-const RaidTableBody = ({ raids }: RaidTableProps) => {
+const RaidTableBody = ({ raids, columns }: RaidTableProps) => {
   return (
     <tbody>
       {raids.map((raid) => (
         <tr key={raid.id}>
-          <td className="raid-id">{NpcList.getById(raid.id).name}</td>
-          <td className="raid-lvl">{NpcList.getById(raid.id).level}</td>
-          {raid.status === "1" ? (
-            <>
-              <td className="raid-status">On</td>
-              <td className="raid-date" style={{ backgroundColor: "green" }}>
-                Alive
-              </td>
-            </>
-          ) : (
-            <>
-              <td className="raid-status">OFF</td>
-              <td className="raid-date">{raid.date}</td>
-            </>
-          )}
+          {columns.map((col) => (
+            <td key={col.key}>{raid[col.key]}</td>
+          ))}
         </tr>
       ))}
     </tbody>
