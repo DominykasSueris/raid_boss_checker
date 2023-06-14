@@ -3,7 +3,6 @@ import RaidTableBody from "./RaidTableBody";
 import RaidTableHeader from "./RaidTableHeader";
 import { currentDate } from "../utils/date";
 import { Column, RaidsInfo } from "../utils/spec";
-import "../App.css";
 import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 
 export interface RaidsTable {
@@ -52,8 +51,8 @@ const RaidTable = ({ raids }: RaidsTable) => {
       <h1>Raid Boss Checker</h1>
       <h4>Current Date: {currentDate}</h4>
       <h3>Available raids:</h3>
-      <div className="table">
-        <table>
+      <div>
+        <table className="table table-striped table-bordered">
           <RaidTableHeader
             columns={columns}
             sorting={sorting}
