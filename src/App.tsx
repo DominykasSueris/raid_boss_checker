@@ -16,7 +16,7 @@ const App = () => {
   return (
     <>
       <RaidLevelFiltering updateFilters={setFilters} />
-      <RaidTable raids={filterData(filters)} />;
+      <RaidTable raids={filterData(filters)} />
     </>
   );
 };

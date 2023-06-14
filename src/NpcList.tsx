@@ -76,7 +76,7 @@ const npcList: npc[] = [
   { id: "25155", name: "Shaman King Selu", level: 40 },
   { id: "25490", name: "Gwindorr", level: 40 },
   { id: "25064", name: "Wizard Of Storm Teruk", level: 40 },
-  { id: "25115", name: " Icarus Sample 1", level: 40 },
+  { id: "25115", name: "Icarus Sample 1", level: 40 },
   { id: "25208", name: "Water Couatle Ateka", level: 40 },
   { id: "25134", name: "Leto Chief Talkin", level: 40 },
   { id: "25214", name: "Fafurion's Page Sika", level: 40 },
