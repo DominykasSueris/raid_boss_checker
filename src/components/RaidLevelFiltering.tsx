@@ -34,7 +34,7 @@ const RaidLevelFiltering = ({ updateFilters }: RaidLevelFiltering) => {
       >
         <option value="">All</option>
         {levels.map((level, idx) => (
-          <option value={idx}>
+          <option key={idx} value={idx}>
             {level.min} - {level.max}
           </option>
         ))}
