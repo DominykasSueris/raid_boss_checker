@@ -50,17 +50,14 @@ const RaidTable = ({ raids }: RaidsTable) => {
     <>
       <h1>Raid Boss Checker</h1>
       <h4>Current Date: {currentDate}</h4>
-      <h3>Available raids:</h3>
-      <div>
-        <table className="table table-striped table-bordered">
-          <RaidTableHeader
-            columns={columns}
-            sorting={sorting}
-            sortTable={sortTable}
-          />
-          <RaidTableBody raids={raidsToShow} columns={columns} />
-        </table>
-      </div>
+      <table className="table table-striped table-bordered w-75 mx-auto">
+        <RaidTableHeader
+          columns={columns}
+          sorting={sorting}
+          sortTable={sortTable}
+        />
+        <RaidTableBody raids={raidsToShow} columns={columns} />
+      </table>
     </>
   );
 };
