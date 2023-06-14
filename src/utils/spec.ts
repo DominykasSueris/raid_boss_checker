@@ -5,7 +5,18 @@ export interface RaidsData {
   date: string;
 }
 
+export interface RaidsInfo extends RaidsData {
+  name: string;
+  level: number;
+}
+
 export interface Filters {
   status: string;
   level?: LevelRange;
+}
+
+export interface Column {
+  key: "name" | "id" | "status" | "date" | "level";
+  label: string;
+  sortable: boolean;
 }
