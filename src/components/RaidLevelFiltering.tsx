@@ -15,7 +15,7 @@ const RaidLevelFiltering = ({ updateFilters }: RaidLevelFiltering) => {
   }, [status, levelValue]);
 
   return (
-    <>
+    <div className="m-4">
       <label>Status select:</label>
       <select
         onChange={(e) => {
@@ -28,7 +28,6 @@ const RaidLevelFiltering = ({ updateFilters }: RaidLevelFiltering) => {
       </select>
       <label>Level select: </label>
       <select
-        className="form-select form-select-lg mb-3 h-75"
         aria-label=".form-select-lg example"
         onChange={(e) => setLevelValue(levels[parseInt(e.target.value)])}
       >
@@ -39,7 +38,7 @@ const RaidLevelFiltering = ({ updateFilters }: RaidLevelFiltering) => {
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 };
 

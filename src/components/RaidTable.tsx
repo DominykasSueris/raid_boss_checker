@@ -48,8 +48,12 @@ const RaidTable = ({ raids }: RaidsTable) => {
 
   return (
     <>
-      <h1>Raid Boss Checker</h1>
-      <h4>Current Date: {currentDate}</h4>
+      <h2 className="d-flex justify-content-center p-3">
+        L2 Reborn x30 server Raid boss checker
+      </h2>
+      <h4 className="d-flex justify-content-end p-3">
+        Current Date:{currentDate}
+      </h4>
       <table className="table table-striped table-bordered w-75 mx-auto">
         <RaidTableHeader
           columns={columns}
