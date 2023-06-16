@@ -2,47 +2,20 @@ import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
 import RaidTableHeader from "./RaidTableHeader";
 import { currentDate } from "../utils/date";
-import { Column, RaidsInfo } from "../utils/spec";
+import { RaidsInfo } from "../utils/spec";
 import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
+import { columns } from "../utils/columns";
 
 export interface RaidsTable {
   raids: RaidsInfo[];
 }
 
 export type Sorting = typeof columnSorting;
-
 const columnSorting = { column: "status", order: "desc" };
 
 const RaidTable = ({ raids }: RaidsTable) => {
   const [sorting, setSorting] = useState<Sorting>(columnSorting);
   const [raidsToShow, setRaidsToShow] = useState<RaidsInfo[]>(raids);
-
-  const columns: Column[] = [
-    {
-      key: "name",
-      label: "Raid Boss ID",
-      sortable: true,
-      classes: "col-lg-6",
-    },
-    {
-      key: "level",
-      label: "Raid Boss Level",
-      sortable: true,
-      classes: "col-lg-2 text-center",
-    },
-    {
-      key: "status",
-      label: "Status",
-      sortable: true,
-      classes: "col-lg-1 text-center",
-    },
-    {
-      key: "date",
-      label: "Spawn Window",
-      sortable: false,
-      classes: "col-lg-3 text-center",
-    },
-  ];
 
   const sortTable = (newSorting: Sorting) => {
     setSorting(newSorting);
