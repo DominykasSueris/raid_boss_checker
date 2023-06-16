@@ -16,7 +16,8 @@ export interface Filters {
 }
 
 export interface Column {
-  key: "name" | "id" | "status" | "date" | "level";
+  key: "name" | "status" | "date" | "level";
   label: string;
   sortable: boolean;
+  classes: string;
 }
