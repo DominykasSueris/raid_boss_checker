@@ -1,4 +1,4 @@
-import NpcList from "../NpcList";
+import NpcList from "../utils/npcList";
 import { LevelRange } from "./levels";
 import { RaidsInfo } from "./spec";
 

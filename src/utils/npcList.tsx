@@ -1,4 +1,4 @@
-import { ensure } from "./utils/utils";
+import { ensure } from "./utils";
 
 export interface npc {
   id: string;

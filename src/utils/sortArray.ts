@@ -1,4 +1,4 @@
-import NpcList from "../NpcList";
+import NpcList from "../utils/npcList";
 import { RaidsData, RaidsInfo } from "../utils/spec";
 
 export const sortByStatus = (raids: RaidsData[]) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { RaidsData, RaidsInfo } from "./spec";
 import { date } from "./date";
-import NpcList from "../NpcList";
+import NpcList from "../utils/npcList";
 
 export const useFetchRaids = () => {
   const [raids, setRaids] = useState<RaidsInfo[]>([]);
