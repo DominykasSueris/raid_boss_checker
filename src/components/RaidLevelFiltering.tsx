@@ -23,8 +23,8 @@ const RaidLevelFiltering = ({ updateFilters }: RaidLevelFiltering) => {
         }}
       >
         <option value="">All</option>
-        <option value="1">ON</option>
-        <option value="0">OFF</option>
+        <option value="On">ON</option>
+        <option value="Off">OFF</option>
       </select>
       <label>Level select: </label>
       <select
