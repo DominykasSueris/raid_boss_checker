@@ -20,10 +20,10 @@ export const useFetchRaids = () => {
     const isUp = raid.status === "1";
     return {
       id: raid.id,
-      status: isUp ? "On" : "Off",
+      status: isUp ? "ON" : "OFF",
       name: npc.name,
       level: npc.level,
-      date: isUp ? "" : raid.date,
+      date: isUp ? "N/A" : raid.date,
     };
   };
 

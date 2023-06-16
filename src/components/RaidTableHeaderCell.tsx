@@ -19,6 +19,7 @@ const RaidTableHeaderCell = ({
 
   return (
     <th
+      className={column.classes}
       key={column.key}
       onClick={() =>
         column.sortable &&

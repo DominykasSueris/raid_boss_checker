@@ -10,7 +10,9 @@ const RaidTableBody = ({ raids, columns }: RaidTableProps) => {
       {raids.map((raid) => (
         <tr key={raid.id}>
           {columns.map((col) => (
-            <td key={col.key}>{raid[col.key]}</td>
+            <td key={col.key} className={col.classes}>
+              {raid[col.key]}
+            </td>
           ))}
         </tr>
       ))}
