@@ -54,7 +54,7 @@ const RaidTable = ({ raids }: RaidsTable) => {
       <h4 className="d-flex justify-content-end p-3">
         Current Date:{currentDate}
       </h4>
-      <table className="table table-striped table-bordered w-75 mx-auto">
+      <table className="table table-striped table-hover table-bordered w-75 mx-auto">
         <RaidTableHeader
           columns={columns}
           sorting={sorting}
