@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
 import RaidTableHeader from "./RaidTableHeader";
 import { currentDate } from "../utils/date";
-import { RaidsInfo } from "../utils/spec";
+import { Filters, RaidsInfo } from "../utils/spec";
 import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 import { columns } from "../utils/columns";
 
 export interface RaidsTable {
   raids: RaidsInfo[];
+  filters: Filters;
 }
 
 export type Sorting = typeof columnSorting;
 const columnSorting = { column: "status", order: "desc" };
 
-const RaidTable = ({ raids }: RaidsTable) => {
+const RaidTable = ({ raids, filters }: RaidsTable) => {
   const [sorting, setSorting] = useState<Sorting>(columnSorting);
   const [raidsToShow, setRaidsToShow] = useState<RaidsInfo[]>(raids);
 
@@ -51,6 +52,7 @@ const RaidTable = ({ raids }: RaidsTable) => {
         <RaidTableHeader
           columns={columns}
           sorting={sorting}
+          filters={filters}
           sortTable={sortTable}
         />
         <RaidTableBody raids={raidsToShow} columns={columns} />

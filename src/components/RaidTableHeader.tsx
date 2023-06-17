@@ -1,14 +1,20 @@
-import { Column } from "../utils/spec";
+import { Column, Filters } from "../utils/spec";
 import { Sorting } from "./RaidTable";
 import RaidTableHeaderCell from "./RaidTableHeaderCell";
 
 interface RaidTableHeader {
   columns: Column[];
   sorting: Sorting;
+  filters: Filters;
   sortTable: (sorting: Sorting) => void;
 }
 
-const RaidTableHeader = ({ columns, sorting, sortTable }: RaidTableHeader) => {
+const RaidTableHeader = ({
+  columns,
+  sorting,
+  filters,
+  sortTable,
+}: RaidTableHeader) => {
   return (
     <thead>
       <tr>
@@ -17,6 +23,7 @@ const RaidTableHeader = ({ columns, sorting, sortTable }: RaidTableHeader) => {
             key={column.key}
             column={column}
             sorting={sorting}
+            filters={filters}
             sortTable={sortTable}
           />
         ))}
