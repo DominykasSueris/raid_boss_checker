@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import RaidTableBody from "./RaidTableBody";
 import RaidTableHeader from "./RaidTableHeader";
-import { currentDate } from "../utils/date";
 import { Filters, RaidsInfo } from "../utils/spec";
 import { sortByBothStatus, sortByLevel } from "../utils/sortArray";
 import { columns } from "../utils/columns";
@@ -42,12 +41,6 @@ const RaidTable = ({ raids, filters }: RaidsTable) => {
 
   return (
     <>
-      <h2 className="d-flex justify-content-center p-3">
-        L2 Reborn x30 server Raid boss checker
-      </h2>
-      <h4 className="d-flex justify-content-end p-3">
-        Current Date:{currentDate}
-      </h4>
       <table className="table table-striped table-hover table-bordered w-75 mx-auto">
         <RaidTableHeader
           columns={columns}
