@@ -16,29 +16,26 @@ const RaidTableHeaderCell = ({
 }: RaidTableHeader) => {
   const isDescSorting =
     sorting.column === column.key && sorting.order === "desc";
-  const isAscSorting = sorting.column === column.key && sorting.order === "asc";
   const futureSortingOrder = isDescSorting ? "asc" : "desc";
-
-  console.log(filters.status);
+  const statusFilter = column.key === "status" && filters.status !== "";
+  const sortable =
+    (column.sortable || statusFilter) && !(column.sortable && statusFilter);
 
   return (
     <th
       className={column.classes}
       key={column.key}
       onClick={() =>
-        column.sortable &&
-        sortTable({ column: column.key, order: futureSortingOrder })
+        sortable &&
+        sortTable({
+          column: column.key,
+          order: futureSortingOrder,
+        })
       }
     >
       {column.label}
-      {!isDescSorting && !isAscSorting && (
-        <i className={column.key === "date" ? "null" : "bi bi-arrow-up"}></i>
-      )}
-      {isDescSorting && (
-        <i className={filters.status ? "" : "bi bi-arrow-down"}></i>
-      )}
-      {isAscSorting && (
-        <i className={filters.status ? "" : "bi bi-arrow-up"}></i>
+      {sortable && (
+        <i className={isDescSorting ? "bi bi-arrow-down" : "bi bi-arrow-up"} />
       )}
     </th>
   );

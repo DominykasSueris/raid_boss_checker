@@ -1,7 +1,7 @@
 import NpcList from "../utils/npcList";
-import { RaidsData, RaidsInfo } from "../utils/spec";
+import { RaidsInfo } from "../utils/spec";
 
-export const sortByStatus = (raids: RaidsData[]) => {
+export const sortByStatus = (raids: RaidsInfo[]) => {
   return raids.sort((a, b) => {
     return a.date < b.date ? -1 : 1 || parseInt(a.status) - parseInt(b.status);
   });
