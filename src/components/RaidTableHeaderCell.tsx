@@ -17,9 +17,8 @@ const RaidTableHeaderCell = ({
   const isDescSorting =
     sorting.column === column.key && sorting.order === "desc";
   const futureSortingOrder = isDescSorting ? "asc" : "desc";
-  const statusFilter = column.key === "status" && filters.status !== "";
   const sortable =
-    (column.sortable || statusFilter) && !(column.sortable && statusFilter);
+    column.sortable && (column.key !== "status" || filters.status === "");
 
   return (
     <th
